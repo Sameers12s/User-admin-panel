@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+// import AppRoutes from './routes/AppRoutes';
+import Login from './pages/Login';
+import AdminHome from './pages/AdminHome';
+import Signup from './pages/Signup';
+import UserDetails from './components/UserDetails';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
-function App() {
+
+const App = () => {
+  const isLoggedIn = window.localStorage.getItem("loggedIn");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          exact
+          path="/"
+          element={isLoggedIn === "true" ? <UserDetails /> : <Login />}
+        />
+        <Route path='/adminhome' element={<AdminHome />} />
+        <Route path="/Signup" element={<Signup />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        {/* <Route path='/userhome' element={<UserHome />} /> */}
+        <Route path='/userhome' element={<UserDetails />} />
+        < Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:id/:token" element={<ResetPassword />} />
+      </Routes>
+    </BrowserRouter>
   );
-}
-
+};
 export default App;
